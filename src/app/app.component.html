@@ -13,13 +13,17 @@
      Bij een foute gok krijg je te zien of je hoger of lager moet gokken.
   </p>
 
-  <input id="inputVeld" [disabled]="isDisabled" #nieuweGokwaarde />
-  <button id="gokButton" [disabled]="isDisabled" (click)="doeGok(nieuweGokwaarde.value)" >Doe een gok</button>
+  <input type="number" id="inputVeld" [disabled]="isSpelVoorbij" #nieuweGokwaarde />
+  <button id="gokButton" [disabled]="isSpelVoorbij" (click)="doeGok(nieuweGokwaarde.value)" >Doe een gok</button>
 
   <p>{{vorigeGokken}}</p>
   <p>{{juistOfFout}}</p>
-  <p>{{lagerOfHoger}}</p>
   <p>{{beurtenOver}}</p>
+
+  <div *ngIf="isSpelVoorbij"> 
+    <p>Nog eens spelen?</p>
+    <button (click)="reset()">Reset</button>
+  </div>
 
 </body>
 </html>
