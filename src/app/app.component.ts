@@ -13,32 +13,29 @@ export class AppComponent {
   teRadenGetal: number = Math.floor(Math.random() * 100) + 1;
   resterendeBeurten: number = 10;
 
-  vorigeGokken: string = '';
+  gokfeedback: string[] = new Array();
   juistOfFout: string = '';
-  beurtenOver: string = '';
+  beurtenOver: string = `Nog ${this.resterendeBeurten} beurt${this.resterendeBeurten == 1 ? '' : 'en'} over`;
 
   isSpelVoorbij: boolean = false;
 
   doeGok = (gok) => {
 
     if (this.isGeldigeWaarde(gok)) {
-      if (this.resterendeBeurten == 10) {
-        this.vorigeGokken = 'Vorige gokken: ';
-      }
-      this.vorigeGokken += gok + ', ';
-  
+      this.juistOfFout = "";
+
       this.resterendeBeurten--;
   
       this.beurtenOver = `Nog ${this.resterendeBeurten} beurt${this.resterendeBeurten == 1 ? '' : 'en'} over`;
   
       if (gok == this.teRadenGetal){
-        this.juistOfFout = `Proficiat, we zochten ${this.teRadenGetal}. Je hebt gewonnen!`;
+        this.beurtenOver = `Proficiat, we zochten ${this.teRadenGetal}. Je hebt gewonnen!`;
         this.eindeSpel();
       } else if (this.resterendeBeurten === 0) {
-        this.juistOfFout = `Helaas, geen beurten meer! We zochten ${this.teRadenGetal}.`;
+        this.beurtenOver = `Helaas, geen beurten meer! We zochten ${this.teRadenGetal}.`;
         this.eindeSpel();
       } else {
-        this.juistOfFout = `Foute gok! Kies een ${gok > this.teRadenGetal ? "lager" : "hoger"} getal.`;
+        this.gokfeedback.push(`${gok} is een foute gok! Kies een ${gok > this.teRadenGetal ? "lager" : "hoger"} getal.`);
       }
   
       console.log(this.teRadenGetal);
@@ -57,15 +54,13 @@ export class AppComponent {
 
   eindeSpel = () => {
     this.isSpelVoorbij = true;
-
-    this.beurtenOver = '';
+    this.gokfeedback.length = 0;
   }
 
   reset = () => {
     this.teRadenGetal = Math.floor(Math.random() * 100) + 1;
     this.resterendeBeurten = 10;
     this.isSpelVoorbij = false;
-    this.vorigeGokken = '';
-    this.juistOfFout = '';
+    this.beurtenOver = '';
   }
 }

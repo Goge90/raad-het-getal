@@ -13,16 +13,25 @@
      Bij een foute gok krijg je te zien of je hoger of lager moet gokken.
   </p>
 
-  <input type="number" id="inputVeld" [disabled]="isSpelVoorbij" #nieuweGokwaarde />
-  <button id="gokButton" [disabled]="isSpelVoorbij" (click)="doeGok(nieuweGokwaarde.value)" >Doe een gok</button>
+  <mat-form-field class="example-full-width" >
+    <mat-label>Doe een nieuwe gok</mat-label>
+    <input matInput type="number" [disabled]="isSpelVoorbij" placeholder="Vul waarde in" #nieuweGokwaarde />
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" id="gokButton" [disabled]="isSpelVoorbij" (click)="doeGok(nieuweGokwaarde.value)"
+    matBadge="{{resterendeBeurten}}" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="medium">Doe een gok</button>
 
-  <p>{{vorigeGokken}}</p>
-  <p>{{juistOfFout}}</p>
+  <mat-progress-bar mode="determinate" value="{{resterendeBeurten*10}}"></mat-progress-bar>
   <p>{{beurtenOver}}</p>
+  <p>{{juistOfFout}}</p>
+
+  <mat-list role="list">
+    <mat-list-item *ngFor="let feedback of gokfeedback" role="listitem">{{feedback}}</mat-list-item>
+  </mat-list>
 
   <div *ngIf="isSpelVoorbij"> 
     <p>Nog eens spelen?</p>
-    <button (click)="reset()">Reset</button>
+    <button mat-raised-button color="accent" (click)="reset()">Reset</button>
   </div>
 
 </body>
